@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/pickup_doc"
+            android:id="@+id/ivpickup_doc"
+            android:padding="10dp"
+            android:layout_marginRight="15dp"  />
+
+        <TextView
+            android:id="@+id/cust_no"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <TextView
+            android:id="@+id/cust_row"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:visibility="gone"/>
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:id="@+id/cust_nama"
+            android:layout_alignParentTop="true"
+            android:layout_toRightOf="@+id/ivpickup_doc"
+            android:layout_toEndOf="@+id/ivpickup_doc"
+            android:textStyle="bold"/>
+
+        <TextView
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAppearance="?android:attr/textAppearanceSmall"
+            android:lines="3"
+            android:id="@+id/cust_alamat"
+            android:layout_below="@+id/cust_nama"
+            android:layout_alignLeft="@+id/ivpickup_doc"
+            android:layout_alignStart="@+id/cust_nama" />
+
+    </RelativeLayout>
+
+</LinearLayout>

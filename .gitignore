@@ -1,0 +1,13 @@
+*.iml
+*.pepk
+*.zip
+.gradle
+.idea
+ScanditBarcodeScanner_4.15.1.aar
+app_icon.png
+build
+desktop.ini
+feature_graphic.png
+gradle
+release
+retrofit-2.0.2.jar

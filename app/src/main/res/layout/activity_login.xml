@@ -1,0 +1,97 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_margin="10dp"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    tools:context=".activity.login">
+
+    <ScrollView
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:id="@+id/scrollView">
+
+        <LinearLayout
+            android:orientation="vertical"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_gravity="center_horizontal">
+
+            <ImageView
+                android:layout_width="match_parent"
+                android:layout_height="65dp"
+                android:id="@+id/imageview_logo"
+                android:src="@drawable/logo_ds"/>
+
+            <TextView
+                android:layout_below="@id/imageview_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="@string/app_name"
+                android:textAlignment="center"
+                android:textSize="12pt"
+                android:textStyle="bold"
+                android:textColor="@color/BLACK"
+                android:gravity="center_horizontal" />
+
+            <TextView
+                android:layout_below="@id/imageview_logo"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/version_login"
+                android:text="Version 0.0"
+                android:textAlignment="center"
+                android:textSize="6pt"
+                android:textStyle="bold"
+                android:textColor="@color/BLACK"
+                android:gravity="center_horizontal" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="3dp"
+                android:layout_marginTop="@dimen/dimen_10dp"
+                android:background="#cccccc"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="User Name"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="#f60002"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="35dp"
+                android:id="@+id/username_login"
+                app:met_singleLineEllipsis="true"
+                android:inputType="text"/>
+
+            <com.rengwuxian.materialedittext.MaterialEditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password"
+                app:met_floatingLabel="highlight"
+                app:met_primaryColor="#f60002"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="35dp"
+                android:id="@+id/passwd_login"
+                app:met_singleLineEllipsis="true"
+                android:inputType="textPassword"/>
+
+            <Button
+                android:layout_width="300dp"
+                android:layout_height="40dp"
+                android:layout_marginTop="25dp"
+                android:text="Login"
+                android:layout_gravity="center_horizontal"
+                android:textColor="#fff"
+                android:textStyle="bold"
+                android:id="@+id/btn_login"
+                android:background="@drawable/border" />
+
+        </LinearLayout>
+
+    </ScrollView>
+
+</RelativeLayout>

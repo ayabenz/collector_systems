@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF808080</color>
+    <color name="colorPrimaryDark">#FF000000</color>
+    <color name="colorAccent">#FFFF0000</color>
+    <color name="list_divider">#d9d9d9</color>
+    <color name="list_row_start_color">#ffffff</color>
+    <color name="list_row_end_color">#ffffff</color>
+    <color name="list_row_hover_start_color">#ebeef0</color>
+    <color name="list_row_hover_end_color">#ebeef0</color>
+
+    <color name="color_menu_selected">#bfc9ca</color>
+    <color name="colorBgActive">#88DDDDDD</color>
+
+    <color name="BLACK">#000000</color>
+    <color name="WHITE">#FFFFFF</color>
+    <color name="GREY">#a6a4a4</color>
+    <color name="LIGHT">#c82b2b2b</color>
+    <color name="GREEN">#c810c938</color>
+    <color name="RED">#ab2424</color>
+    <color name="UNGU">#420371</color>
+
+    <color name="orange">#f1896102</color>
+    <color name="light_orange">#f3dec10a</color>
+
+    <color name="review_green">#ff669900</color>
+    <color name="step_pager_previous_tab_color">#4433b5e5</color>
+    <color name="step_pager_selected_tab_color">#ff0099cc</color>
+    <color name="item_selected">#330099cc</color>
+    <color name="step_pager_selected_last_tab_color">#ff669900</color>
+    <color name="step_pager_next_tab_color">#10000000</color>
+    <color name="button_disabled_background">#ca424342</color>
+    <color name="button_finish_background">#ca20b12e</color>
+
+    <color name="toolbar_color">#f306ab16</color>
+
+    <color name="zxing_possible_result_points">#c0ffbd21</color> <!-- Android standard ICS color -->
+    <color name="zxing_result_view">#b0000000</color>
+    <color name="zxing_status_text">#ffffffff</color>
+    <color name="zxing_transparent">#00000000</color>
+    <color name="zxing_viewfinder_laser">#ffcc0000</color> <!-- Android standard ICS color -->
+    <color name="zxing_viewfinder_mask">#60000000</color>
+
+    <color name="zxing_custom_possible_result_points">#903A89CF</color>
+    <color name="zxing_custom_result_view">#b0000000</color>
+    <color name="zxing_custom_viewfinder_laser">#1976D2</color>
+    <color name="zxing_custom_viewfinder_mask">#CC000000</color>
+</resources>
