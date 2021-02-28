@@ -1,19 +1,20 @@
-package id.co.datascrip.app_collector_systems.fragmet;
+package id.co.datascrip.app_collector_systems.fragment;
 
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -54,15 +55,14 @@ public class pending extends Fragment {
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        lvData = (ListView)view.findViewById(R.id.list_pending);
+        lvData = view.findViewById(R.id.list_pending);
         //query = new AQuery(getActivity());
         sesi = new SessionManager(getActivity());
         data = new ArrayList<>();
 
-        if (!AYHelper.isOnline(getActivity())){
+        if (!AYHelper.isOnline(getActivity())) {
             AYHelper.alertMessageNoInternet(getActivity());
-        }
-        else{
+        } else {
             getData();
         }
     }
@@ -131,15 +131,15 @@ public class pending extends Fragment {
             AYHelper.IC_History icHistory = AYHelper.createRetrofit(getActivity()).create(AYHelper.IC_History.class);
             icHistory.getHistory(sesi.getIduser(), "Gagal").enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     try {
                         String hasil = response.body().string();
                         JSONObject json = new JSONObject(hasil);
                         String result = json.getString("result");
                         String pesan = json.getString("msg");
-                        if(result.equalsIgnoreCase("true")){
+                        if (result.equalsIgnoreCase("true")) {
                             JSONArray jsonArray = json.getJSONArray("data");
-                            for(int a=0; a<jsonArray.length(); a++) {
+                            for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
                                 DataPending b = new DataPending();
                                 b.setId(object.getString("id"));
@@ -167,7 +167,7 @@ public class pending extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable throwable) {
                     AYHelper.alert_dialog(getActivity(), "Perhatian", throwable.getMessage());
                     progressDialog.dismiss();
                 }
@@ -181,8 +181,8 @@ public class pending extends Fragment {
 
 
     private class CustomAdapter extends BaseAdapter {
-        private Context c;
-        private ArrayList<DataPending> datas;
+        private final Context c;
+        private final ArrayList<DataPending> datas;
         private LayoutInflater inflater = null;
 
         public CustomAdapter(FragmentActivity activity, ArrayList<DataPending> data) {
@@ -207,20 +207,20 @@ public class pending extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            inflater = (LayoutInflater) c.getSystemService(c.LAYOUT_INFLATER_SERVICE);
+            inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             View v = inflater.inflate(R.layout.list_row_pending, null);
-            TextView txt_id = (TextView) v.findViewById(R.id.txt_p_id);
-            TextView txt_inv = (TextView) v.findViewById(R.id.txt_p_invoice_no);
-            TextView txt_pickup = (TextView) v.findViewById(R.id.txt_p_pickup);
-            TextView txt_hasil = (TextView) v.findViewById(R.id.txt_p_hasil);
+            TextView txt_id = v.findViewById(R.id.txt_p_id);
+            TextView txt_inv = v.findViewById(R.id.txt_p_invoice_no);
+            TextView txt_pickup = v.findViewById(R.id.txt_p_pickup);
+            TextView txt_hasil = v.findViewById(R.id.txt_p_hasil);
 
             DataPending b = datas.get(position);
 
             txt_id.setText(b.getId());
             txt_inv.setText(b.getFakturno());
-            txt_pickup.setText("Pickup : "+AYHelper.tglJamToInd(b.getJampickup()));
-            txt_hasil.setText(b.getCust_no()+" "+b.getCust_name()+", Alamat : "+b.getAlamat());
-            return  v;
+            txt_pickup.setText("Pickup : " + AYHelper.tglJamToInd(b.getJampickup()));
+            txt_hasil.setText(b.getCust_no() + " " + b.getCust_name() + ", Alamat : " + b.getAlamat());
+            return v;
         }
     }
 

@@ -8,6 +8,7 @@ import retrofit2.http.FieldMap;
 import retrofit2.http.FormUrlEncoded;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Path;
 
 /**
  * Created by alamsyah_putra on 4/27/2017.
@@ -52,6 +53,12 @@ public interface IC_Get_Data {
     @FormUrlEncoded
     @POST("api_collector/update_multiple_hasil_kunjungan_faktur")
     Call<ResponseBody> update_multiple_hasil_kunjungan_faktur(@FieldMap Map<String, String> data);
+
+    @GET("api_collector/sett_list_data_ttf/{userId}/{nama_customer}")
+    Call<ResponseBody> sett_list_data_ttf(@Path("userId") String userId, @Path("nama_customer") String nama_customer);
+
+    @GET("api_collector/sett_list_invoice/{cust_no}/{row_no}/{userId}/{no_faktur}")
+    Call<ResponseBody> sett_list_invoice(@Path("cust_no") String cust_no, @Path("row_no") String row_no, @Path("userId") String userId, @Path("no_faktur") String no_faktur);
 
     @FormUrlEncoded
     @POST("api_collector/login")

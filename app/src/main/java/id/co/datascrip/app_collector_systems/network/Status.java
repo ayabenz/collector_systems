@@ -5,10 +5,22 @@ import android.os.Parcelable;
 
 public class Status implements Parcelable {
 
+    public static final Creator<Status> CREATOR = new Creator<Status>() {
+        @Override
+        public Status createFromParcel(Parcel in) {
+            return new Status(in);
+        }
+
+        @Override
+        public Status[] newArray(int size) {
+            return new Status[size];
+        }
+    };
     private boolean isSuccess;
     private String Message, Query;
 
-    public Status() {}
+    public Status() {
+    }
 
     public Status(boolean isSuccess, String message, String query) {
         this.isSuccess = isSuccess;
@@ -21,18 +33,6 @@ public class Status implements Parcelable {
         Message = in.readString();
         Query = in.readString();
     }
-
-    public static final Creator<Status> CREATOR = new Creator<Status>() {
-        @Override
-        public Status createFromParcel(Parcel in) {
-            return new Status(in);
-        }
-
-        @Override
-        public Status[] newArray(int size) {
-            return new Status[size];
-        }
-    };
 
     public boolean isSuccess() {
         return isSuccess;

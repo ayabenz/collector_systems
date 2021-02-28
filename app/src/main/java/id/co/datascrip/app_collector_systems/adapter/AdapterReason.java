@@ -1,13 +1,14 @@
 package id.co.datascrip.app_collector_systems.adapter;
 
 import android.content.Context;
-import androidx.core.content.ContextCompat;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.LinearLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import java.util.ArrayList;
 
@@ -18,10 +19,10 @@ import id.co.datascrip.app_collector_systems.data.DataReason;
  * Created by alamsyah_putra on 4/3/2017.
  */
 public class AdapterReason extends ArrayAdapter<DataReason> {
-    private Context context;
-    private ArrayList<DataReason> list_reason;
+    private final Context context;
+    private final ArrayList<DataReason> list_reason;
     private int selectedPosition = 0;
-    private LayoutInflater inflater;
+    private final LayoutInflater inflater;
 
     public AdapterReason(Context context, int resource, ArrayList<DataReason> list_reason) {
         super(context, resource, list_reason);
@@ -38,11 +39,6 @@ public class AdapterReason extends ArrayAdapter<DataReason> {
     @Override
     public View getDropDownView(int position, View convertView, ViewGroup parent) {
         return getCustomView(position, convertView, parent);
-    }
-
-    private class ViewHolder {
-        public TextView tx_code, tx_description;
-        public LinearLayout layout_alasan;
     }
 
     @Override
@@ -89,9 +85,9 @@ public class AdapterReason extends ArrayAdapter<DataReason> {
             viewHolder = (ViewHolder) view.getTag();
         }
 
-        viewHolder.tx_code = (TextView) view.findViewById(R.id.tx_code);
-        viewHolder.tx_description = (TextView) view.findViewById(R.id.tx_description);
-        viewHolder.layout_alasan = (LinearLayout) view.findViewById(R.id.layout_alasan);
+        viewHolder.tx_code = view.findViewById(R.id.tx_code);
+        viewHolder.tx_description = view.findViewById(R.id.tx_description);
+        viewHolder.layout_alasan = view.findViewById(R.id.layout_alasan);
 
         DataReason reason = list_reason.get(position);
         viewHolder.tx_code.setText(reason.getCode());
@@ -99,8 +95,14 @@ public class AdapterReason extends ArrayAdapter<DataReason> {
 
         if (position == selectedPosition)
             viewHolder.layout_alasan.setBackgroundColor(ContextCompat.getColor(context, R.color.item_selected));
-        else    viewHolder.layout_alasan.setBackgroundColor(ContextCompat.getColor(context, R.color.zxing_transparent));
+        else
+            viewHolder.layout_alasan.setBackgroundColor(ContextCompat.getColor(context, R.color.zxing_transparent));
 
         return view;
+    }
+
+    private class ViewHolder {
+        public TextView tx_code, tx_description;
+        public LinearLayout layout_alasan;
     }
 }

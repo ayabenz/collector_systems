@@ -37,6 +37,7 @@ public class JSON {
         }
         return 0;
     }
+
     public static float getFloat(JSONObject jsonObject, String Key) {
         try {
             if (jsonObject.has(Key))

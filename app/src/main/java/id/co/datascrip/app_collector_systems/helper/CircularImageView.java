@@ -26,6 +26,7 @@ import id.co.datascrip.app_collector_systems.R;
  * Created by alamsyah_putra on 3/24/2017.
  */
 public class CircularImageView extends AppCompatImageView {
+    boolean shadowEnabled;
     // Border & Selector configuration variables
     private boolean hasBorder;
     private boolean hasSelector;
@@ -40,7 +41,6 @@ public class CircularImageView extends AppCompatImageView {
     private Paint paintBorder;
     private Paint paintSelectorBorder;
     private ColorFilter selectorFilter;
-    boolean shadowEnabled;
 
     public CircularImageView(Context context) {
         this(context, null);
@@ -58,12 +58,9 @@ public class CircularImageView extends AppCompatImageView {
     /**
      * Initializes paint objects and sets desired attributes.
      *
-     * @param context
-     *            Context
-     * @param attrs
-     *            Attributes
-     * @param defStyle
-     *            Default Style
+     * @param context  Context
+     * @param attrs    Attributes
+     * @param defStyle Default Style
      */
     private void init(Context context, AttributeSet attrs, int defStyle) {
         // Initialize paint objects
@@ -122,8 +119,7 @@ public class CircularImageView extends AppCompatImageView {
     /**
      * Sets the CircularImageView's border width in pixels.
      *
-     * @param borderWidth
-     *            Width in pixels for the border.
+     * @param borderWidth Width in pixels for the border.
      */
     public void setBorderWidth(int borderWidth) {
         this.borderWidth = borderWidth;
@@ -134,8 +130,7 @@ public class CircularImageView extends AppCompatImageView {
     /**
      * Sets the CircularImageView's basic border color.
      *
-     * @param borderColor
-     *            The new color (including alpha) to set the border.
+     * @param borderColor The new color (including alpha) to set the border.
      */
     public void setBorderColor(int borderColor) {
         if (paintBorder != null)
@@ -147,8 +142,7 @@ public class CircularImageView extends AppCompatImageView {
      * Sets the color of the selector to be draw over the CircularImageView. Be
      * sure to provide some opacity.
      *
-     * @param selectorColor
-     *            The color (including alpha) to set for the selector overlay.
+     * @param selectorColor The color (including alpha) to set for the selector overlay.
      */
     public void setSelectorColor(int selectorColor) {
         this.selectorFilter = new PorterDuffColorFilter(selectorColor,
@@ -160,8 +154,7 @@ public class CircularImageView extends AppCompatImageView {
      * Sets the stroke width to be drawn around the CircularImageView during
      * click events when the selector is enabled.
      *
-     * @param selectorStrokeWidth
-     *            Width in pixels for the selector stroke.
+     * @param selectorStrokeWidth Width in pixels for the selector stroke.
      */
     public void setSelectorStrokeWidth(int selectorStrokeWidth) {
         this.selectorStrokeWidth = selectorStrokeWidth;
@@ -173,8 +166,7 @@ public class CircularImageView extends AppCompatImageView {
      * Sets the stroke color to be drawn around the CircularImageView during
      * click events when the selector is enabled.
      *
-     * @param selectorStrokeColor
-     *            The color (including alpha) to set for the selector stroke.
+     * @param selectorStrokeColor The color (including alpha) to set for the selector stroke.
      */
     public void setSelectorStrokeColor(int selectorStrokeColor) {
         if (paintSelectorBorder != null)
@@ -185,8 +177,7 @@ public class CircularImageView extends AppCompatImageView {
     /**
      * Enables a dark shadow for this CircularImageView.
      *
-     * @param shadowEnabled
-     *            Set to true to render a shadow or false to disable it.
+     * @param shadowEnabled Set to true to render a shadow or false to disable it.
      */
     public void setShadow(boolean shadowEnabled) {
         this.shadowEnabled = true;
@@ -363,8 +354,7 @@ public class CircularImageView extends AppCompatImageView {
     /**
      * Convert a drawable object into a Bitmap.
      *
-     * @param drawable
-     *            Drawable to extract a Bitmap from.
+     * @param drawable Drawable to extract a Bitmap from.
      * @return A Bitmap created from the drawable parameter.
      */
     public Bitmap drawableToBitmap(Drawable drawable) {

@@ -22,13 +22,13 @@ import id.co.datascrip.app_collector_systems.activity.form_scan;
 
 public class dialog_input_manual extends AlertDialog {
 
-    private Context context;
+    private final Context context;
 
     private TextView tx_dialog_title;
     private EditText tx_input_text;
     private TextInputLayout tx_input_hint;
     private Button bt_ok, bt_cancel;
-    private Bundle bundle;
+    private final Bundle bundle;
 
     public dialog_input_manual(Context context, Bundle bundle) {
         super(context);
@@ -40,18 +40,18 @@ public class dialog_input_manual extends AlertDialog {
     private void init() {
         View view = LayoutInflater.from(context).inflate(R.layout.activity_dialog_input_manual, null);
 
-        tx_dialog_title = (TextView) view.findViewById(R.id.tx_dialog_title);
-        tx_input_text = (EditText) view.findViewById(R.id.tx_input_text);
-        tx_input_hint = (TextInputLayout) view.findViewById(R.id.tx_input_hint);
-        bt_ok = (Button) view.findViewById(R.id.bt_ok);
-        bt_cancel = (Button) view.findViewById(R.id.bt_cancel);
+        tx_dialog_title = view.findViewById(R.id.tx_dialog_title);
+        tx_input_text = view.findViewById(R.id.tx_input_text);
+        tx_input_hint = view.findViewById(R.id.tx_input_hint);
+        bt_ok = view.findViewById(R.id.bt_ok);
+        bt_cancel = view.findViewById(R.id.bt_cancel);
 
         tx_dialog_title.setText(bundle.getString("TitleInput"));
         tx_input_hint.setHint(bundle.getString("InputHint"));
         tx_input_text.setHint(bundle.getString("InputHintText"));
         tx_input_text.setImeActionLabel("Done", KeyEvent.KEYCODE_ENTER);
 
-        tx_input_text.setFilters(new InputFilter[] {new InputFilter.AllCaps()});
+        tx_input_text.setFilters(new InputFilter[]{new InputFilter.AllCaps()});
 
         tx_input_text.addTextChangedListener(new TextWatcher() {
             @Override
@@ -76,26 +76,20 @@ public class dialog_input_manual extends AlertDialog {
             }
         });
 
-        bt_cancel.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tx_input_text.requestFocus();
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(tx_input_text.getWindowToken(), 0);
-                form_scan.no = "";
-                dismiss();
-            }
+        bt_cancel.setOnClickListener(v -> {
+            tx_input_text.requestFocus();
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(tx_input_text.getWindowToken(), 0);
+            form_scan.no = "";
+            dismiss();
         });
 
-        bt_ok.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                tx_input_text.requestFocus();
-                InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
-                imm.hideSoftInputFromWindow(tx_input_text.getWindowToken(), 0);
-                form_scan.no = tx_input_text.getText().toString().toUpperCase().trim();
-                dismiss();
-            }
+        bt_ok.setOnClickListener(v -> {
+            tx_input_text.requestFocus();
+            InputMethodManager imm = (InputMethodManager) context.getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(tx_input_text.getWindowToken(), 0);
+            form_scan.no = tx_input_text.getText().toString().toUpperCase().trim();
+            dismiss();
         });
 
         setView(view);

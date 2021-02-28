@@ -23,12 +23,12 @@ public class ConstSQLite {
     public static final String CREATE_TABLE_ALASAN = "CREATE TABLE " + TABLE_ALASAN + "(" +
             ALASAN_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             ALASAN_CODE + " INTEGER ," +
-            ALASAN_DESCRIPTION + " TEXT,"+
+            ALASAN_DESCRIPTION + " TEXT," +
             ALASAN_TIPE + " TEXT )";
 
     public static final String CREATE_TABLE_CUSTOMER_FAKTUR = "CREATE TABLE " + TABLE_CUSTOMER_FAKTUR + "(" +
             C_ID + " INTEGER PRIMARY KEY AUTOINCREMENT NOT NULL, " +
             C_CODE + " TEXT ," +
-            C_NAME + " TEXT,"+
+            C_NAME + " TEXT," +
             C_ALAMAT + " TEXT )";
 }

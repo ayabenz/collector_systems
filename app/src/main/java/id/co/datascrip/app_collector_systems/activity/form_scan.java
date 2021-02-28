@@ -2,17 +2,16 @@ package id.co.datascrip.app_collector_systems.activity;
 
 import android.Manifest;
 import android.annotation.TargetApi;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ActivityInfo;
 import android.content.pm.PackageManager;
 import android.graphics.Typeface;
 import android.os.Build;
 import android.os.Bundle;
-import androidx.core.content.ContextCompat;
-import android.view.View;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+
+import androidx.core.content.ContextCompat;
 
 import com.google.android.material.appbar.AppBarLayout;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
@@ -33,12 +32,10 @@ import id.co.datascrip.app_collector_systems.helper.BaseActivity;
 public class form_scan extends BaseActivity implements OnScanListener {
 
     private static final String API_KEY = "9ToLgTNKw2is3mEcnf99yF0mRyLLdVzRNWxCw0KCM58";
-
+    private final static int CAMERA_PERMISSION_REQUEST = 5;
+    public static String no = "";
     private BarcodePicker mPicker;
     private boolean mDeniedCameraAccess = false;
-    private final static int CAMERA_PERMISSION_REQUEST = 5;
-
-    public static String no = "";
     private Bundle bundle;
 
     @Override
@@ -56,23 +53,17 @@ public class form_scan extends BaseActivity implements OnScanListener {
         TextView tx_input_manual = new TextView(this);
         tx_input_manual.setText(bundle.getString("TitleInput").trim().replace(":", ""));
 
-        floatingActionButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                dialog_input_manual dialog = new dialog_input_manual(form_scan.this, bundle);
-                dialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
-                    @Override
-                    public void onDismiss(DialogInterface dialog) {
-                        if (!Function.isEmpty(no)) {
-                            Intent intent = new Intent();
-                            intent.putExtra(getString(R.string.intent_result_scan), no);
-                            setResult(RESULT_OK, intent);
-                            no = "";
-                            finish();
-                        }
-                    }
-                });
-            }
+        floatingActionButton.setOnClickListener(v -> {
+            dialog_input_manual dialog = new dialog_input_manual(form_scan.this, bundle);
+            dialog.setOnDismissListener(dialog1 -> {
+                if (!Function.isEmpty(no)) {
+                    Intent intent = new Intent();
+                    intent.putExtra(getString(R.string.intent_result_scan), no);
+                    setResult(RESULT_OK, intent);
+                    no = "";
+                    finish();
+                }
+            });
         });
 
         RelativeLayout.LayoutParams rParams = new RelativeLayout.LayoutParams(AppBarLayout.LayoutParams.WRAP_CONTENT, AppBarLayout.LayoutParams.WRAP_CONTENT);
@@ -121,7 +112,7 @@ public class form_scan extends BaseActivity implements OnScanListener {
     }
 
     @Override
-    public void onRequestPermissionsResult(int requestCode, String permissions[], int[] grantResults) {
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
         if (requestCode == CAMERA_PERMISSION_REQUEST) {
             mDeniedCameraAccess = !(grantResults.length > 0 && grantResults[0] == PackageManager.PERMISSION_GRANTED);
             return;

@@ -3,6 +3,8 @@ package id.co.datascrip.app_collector_systems.proses;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import java.util.ArrayList;
 
 import id.co.datascrip.app_collector_systems.SessionManager;
@@ -16,10 +18,10 @@ import retrofit2.Response;
 
 public class Proses_Load_Data {
 
-    private Context context;
+    private final Context context;
     private String id_user = "";
-    private RetrofitCallback.CBLoadData CB;
-    private ProgressDialog progressDialog;
+    private final RetrofitCallback.CBLoadData CB;
+    private final ProgressDialog progressDialog;
 
     public Proses_Load_Data(Context context, RetrofitCallback.CBLoadData CB) {
         this.context = context;
@@ -39,7 +41,7 @@ public class Proses_Load_Data {
             RetrofitInterface.IC_GET_REASON IC = AYHelper.createRetrofit(context).create(RetrofitInterface.IC_GET_REASON.class);
             IC.Post(id_user).enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     String result = RetrofitResponse.getString(response);
                     if (RetrofitResponse.isSuccess(result)) {
                         ReasonSQLite reasonSQLite = new ReasonSQLite(context);
@@ -55,13 +57,13 @@ public class Proses_Load_Data {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable throwable) {
                     if (progressDialog != null)
                         progressDialog.dismiss();
                     CB.OnCB(false);
                 }
             });
-        }else {
+        } else {
             progressDialog.dismiss();
         }
     }

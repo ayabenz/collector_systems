@@ -15,9 +15,8 @@ public class ShitCheckBox extends AppCompatCheckBox {
     /**
      * Simple constructor to use when creating a widget from code.
      *
-     * @param context
-     *            The Context the widget is running in, through which it can
-     *            access the current theme, resources, etc.
+     * @param context The Context the widget is running in, through which it can
+     *                access the current theme, resources, etc.
      */
     public ShitCheckBox(Context context) {
         super(context);
@@ -35,11 +34,9 @@ public class ShitCheckBox extends AppCompatCheckBox {
      * The method onFinishInflate() will be called after all children have been
      * added.
      *
-     * @param context
-     *            The Context the widget is running in, through which it can
-     *            access the current theme, resources, etc.
-     * @param attrs
-     *            The attributes of the XML tag that is inflating the widget.
+     * @param context The Context the widget is running in, through which it can
+     *                access the current theme, resources, etc.
+     * @param attrs   The attributes of the XML tag that is inflating the widget.
      * @see #ShitCheckBox(Context, AttributeSet, int)
      */
     public ShitCheckBox(Context context, AttributeSet attrs) {
@@ -52,16 +49,13 @@ public class ShitCheckBox extends AppCompatCheckBox {
      * constructor of View allows subclasses to use their own base style when
      * they are inflating.
      *
-     * @param context
-     *            The Context the widget is running in, through which it can
-     *            access the current theme, resources, etc.
-     * @param attrs
-     *            The attributes of the XML tag that is inflating the widget.
-     * @param defStyle
-     *            The default style to apply to this widget. If 0, no style will
-     *            be applied (beyond what is included in the theme). This may
-     *            either be an attribute resource, whose value will be retrieved
-     *            from the current theme, or an explicit style resource.
+     * @param context  The Context the widget is running in, through which it can
+     *                 access the current theme, resources, etc.
+     * @param attrs    The attributes of the XML tag that is inflating the widget.
+     * @param defStyle The default style to apply to this widget. If 0, no style will
+     *                 be applied (beyond what is included in the theme). This may
+     *                 either be an attribute resource, whose value will be retrieved
+     *                 from the current theme, or an explicit style resource.
      * @see #ShitCheckBox(Context, AttributeSet)
      */
     public ShitCheckBox(Context context, AttributeSet attrs, int defStyle) {
@@ -72,14 +66,11 @@ public class ShitCheckBox extends AppCompatCheckBox {
     /**
      * Setup Roboto typeface.
      *
-     * @param context
-     *            The Context the widget is running in, through which it can
-     *            access the current theme, resources, etc.
-     * @param attrs
-     *            The attributes of the XML tag that is inflating the widget.
-     * @param defStyle
-     *            The default style to apply to this widget. If 0, no style will
-     *            be applied (beyond what is included in the theme).
+     * @param context  The Context the widget is running in, through which it can
+     *                 access the current theme, resources, etc.
+     * @param attrs    The attributes of the XML tag that is inflating the widget.
+     * @param defStyle The default style to apply to this widget. If 0, no style will
+     *                 be applied (beyond what is included in the theme).
      */
     private void onInitTypeface(Context context, AttributeSet attrs, int defStyle) {
         // Typeface.createFromAsset doesn't work in the layout editor, so

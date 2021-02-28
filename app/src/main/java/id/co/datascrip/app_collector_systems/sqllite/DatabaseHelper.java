@@ -9,7 +9,7 @@ import android.database.sqlite.SQLiteOpenHelper;
  */
 public class DatabaseHelper extends SQLiteOpenHelper {
 
-    private Context context;
+    private final Context context;
 
     public DatabaseHelper(Context context) {
         super(context, ConstSQLite.DATABASE_NAME_DEMO, null, ConstSQLite.DATABASE_VERSION);

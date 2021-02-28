@@ -12,7 +12,17 @@ public class DataReason implements Parcelable {
     public static final String DESCRIPTION = "desc";
     public static final String TIPE = "tipe";
     public static final String TIPE_CODE = "tipe_code";
+    public static final Creator<DataReason> CREATOR = new Creator<DataReason>() {
+        @Override
+        public DataReason createFromParcel(Parcel in) {
+            return new DataReason(in);
+        }
 
+        @Override
+        public DataReason[] newArray(int size) {
+            return new DataReason[size];
+        }
+    };
     private int ID;
     private String Code, Description, Tipe, Tipe_code;
 
@@ -30,18 +40,6 @@ public class DataReason implements Parcelable {
         Tipe = in.readString();
         Tipe_code = in.readString();
     }
-
-    public static final Creator<DataReason> CREATOR = new Creator<DataReason>() {
-        @Override
-        public DataReason createFromParcel(Parcel in) {
-            return new DataReason(in);
-        }
-
-        @Override
-        public DataReason[] newArray(int size) {
-            return new DataReason[size];
-        }
-    };
 
     @Override
     public int describeContents() {
@@ -81,14 +79,20 @@ public class DataReason implements Parcelable {
         Code = code;
     }
 
-    public void setTipe(String tipe){ Tipe = tipe;}
-
-    public String getTipe(){return Tipe;}
-
-    public void setTipe_code(String tipe_code){
-        Tipe_code = tipe_code;
+    public String getTipe() {
+        return Tipe;
     }
 
-    public String getTipe_code(){return Tipe_code;}
+    public void setTipe(String tipe) {
+        Tipe = tipe;
+    }
+
+    public String getTipe_code() {
+        return Tipe_code;
+    }
+
+    public void setTipe_code(String tipe_code) {
+        Tipe_code = tipe_code;
+    }
 
 }

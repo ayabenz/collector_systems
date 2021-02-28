@@ -2,7 +2,6 @@ package id.co.datascrip.app_collector_systems;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.text.Editable;
 import android.text.Html;
 import android.util.Log;
@@ -85,19 +84,13 @@ public class Utils {
         if (message != null)
             new AlertDialog.Builder(context)
                     .setMessage(Html.fromHtml(message))
-                    .setPositiveButton("OK", new DialogInterface.OnClickListener() {
-                        @Override
-                        public void onClick(DialogInterface dialog, int which) {
-                            if (finish)
-                                ((Activity) context).finish();
-                        }
+                    .setPositiveButton("OK", (dialog, which) -> {
+                        if (finish)
+                            ((Activity) context).finish();
                     })
-                    .setOnDismissListener(new DialogInterface.OnDismissListener() {
-                        @Override
-                        public void onDismiss(DialogInterface dialog) {
-                            if (finish)
-                                ((Activity) context).finish();
-                        }
+                    .setOnDismissListener(dialog -> {
+                        if (finish)
+                            ((Activity) context).finish();
                     })
                     .create()
                     .show();

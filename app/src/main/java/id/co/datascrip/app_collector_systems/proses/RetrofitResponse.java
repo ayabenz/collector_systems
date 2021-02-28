@@ -46,10 +46,10 @@ public class RetrofitResponse {
             for (int i = 0; i < jsonArray.length(); i++) {
                 JSONObject jsonReason = jsonArray.getJSONObject(i);
                 DataReason reason = new DataReason();
-                reason.setCode(jsonReason.getString(reason.CODE));
-                reason.setDescription(jsonReason.getString(reason.DESCRIPTION));
-                reason.setTipe(jsonReason.getString(reason.TIPE));
-                reason.setTipe_code(jsonReason.getString(reason.TIPE_CODE));
+                reason.setCode(jsonReason.getString(DataReason.CODE));
+                reason.setDescription(jsonReason.getString(DataReason.DESCRIPTION));
+                reason.setTipe(jsonReason.getString(DataReason.TIPE));
+                reason.setTipe_code(jsonReason.getString(DataReason.TIPE_CODE));
                 listReason.add(reason);
             }
         } catch (Exception e) {

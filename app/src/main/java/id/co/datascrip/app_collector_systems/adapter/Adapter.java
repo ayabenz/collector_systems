@@ -17,9 +17,9 @@ import id.co.datascrip.app_collector_systems.data.Data;
  * Created by alamsyah_putra on 3/29/2017.
  */
 public class Adapter extends BaseAdapter {
-    private Activity activity;
+    private final Activity activity;
     private LayoutInflater inflater;
-    private List<Data> items;
+    private final List<Data> items;
 
     public Adapter(Activity activity, List<Data> items) {
         this.activity = activity;
@@ -51,17 +51,17 @@ public class Adapter extends BaseAdapter {
         if (convertView == null)
             convertView = inflater.inflate(R.layout.list_row, null);
 
-        TextView id = (TextView) convertView.findViewById(R.id.cust_no);
-        TextView rowno = (TextView) convertView.findViewById(R.id.cust_row);
-        TextView nama = (TextView) convertView.findViewById(R.id.cust_nama);
-        TextView alamat = (TextView) convertView.findViewById(R.id.cust_alamat);
+        TextView id = convertView.findViewById(R.id.cust_no);
+        TextView rowno = convertView.findViewById(R.id.cust_row);
+        TextView nama = convertView.findViewById(R.id.cust_nama);
+        TextView alamat = convertView.findViewById(R.id.cust_alamat);
 
         Data data = items.get(position);
 
         id.setText(data.getId());
         rowno.setText(data.getRowno());
         nama.setText(data.getId());
-        alamat.setText("Nama : "+data.getNama()+",  Alamat : "+data.getAlamat());
+        alamat.setText("Nama : " + data.getNama() + ",  Alamat : " + data.getAlamat());
 
         return convertView;
     }

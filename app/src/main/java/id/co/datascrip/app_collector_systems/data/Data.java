@@ -5,13 +5,13 @@ package id.co.datascrip.app_collector_systems.data;
  */
 public class Data {
 
-    private String id, nama, alamat,rowno;
+    private String id, nama, alamat, rowno;
 
 
     public Data() {
     }
 
-    public Data(String id, String nama, String alamat,String rowno) {
+    public Data(String id, String nama, String alamat, String rowno) {
         this.id = id;
         this.nama = nama;
         this.alamat = alamat;
@@ -46,7 +46,12 @@ public class Data {
         return name;
     }
 
-    public void setRowno(String rowno){this.rowno = rowno;}
-    public String getRowno(){return rowno;}
+    public String getRowno() {
+        return rowno;
+    }
+
+    public void setRowno(String rowno) {
+        this.rowno = rowno;
+    }
 
 }

@@ -14,8 +14,8 @@ import id.co.datascrip.app_collector_systems.data.Data;
  * Created by alamsyah_putra on 4/12/2017.
  */
 public class Customer_Faktur_SQLLite {
-    private Context context;
-    private DatabaseHelper dbHelper;
+    private final Context context;
+    private final DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
     public Customer_Faktur_SQLLite(Context context) {

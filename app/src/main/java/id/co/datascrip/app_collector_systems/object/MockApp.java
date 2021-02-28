@@ -14,6 +14,17 @@ import id.co.datascrip.app_collector_systems.BuildConfig;
  * Created by alamsyah_putra on 4/5/2017.
  */
 public class MockApp implements Parcelable {
+    public static final Creator<MockApp> CREATOR = new Creator<MockApp>() {
+        @Override
+        public MockApp createFromParcel(Parcel in) {
+            return new MockApp(in);
+        }
+
+        @Override
+        public MockApp[] newArray(int size) {
+            return new MockApp[size];
+        }
+    };
     private ArrayList<String> PackageName = new ArrayList<>();
 
     public MockApp() {
@@ -32,18 +43,6 @@ public class MockApp implements Parcelable {
     public int describeContents() {
         return 0;
     }
-
-    public static final Creator<MockApp> CREATOR = new Creator<MockApp>() {
-        @Override
-        public MockApp createFromParcel(Parcel in) {
-            return new MockApp(in);
-        }
-
-        @Override
-        public MockApp[] newArray(int size) {
-            return new MockApp[size];
-        }
-    };
 
     public ArrayList<String> getPackageName() {
         return PackageName;

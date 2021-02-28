@@ -31,8 +31,8 @@ import java.util.Map;
 public class Fonts {
 
     /*
-    * Available fonts
-    */
+     * Available fonts
+     */
     public final static int ALLER_REGULAR = 0;
     public final static int ALLER_BOLD = 1;
     public final static int OPENSANS_REGULAR = 2;
@@ -53,6 +53,7 @@ public class Fonts {
     public final static int FELBRIDGE_BOLD = 17;
 
     private final static Map<String, Integer> typeFacesMap;
+    private final static SparseArray<Typeface> mTypefaces = new SparseArray<Typeface>(20);
 
     static {
         typeFacesMap = new HashMap<>();
@@ -75,8 +76,6 @@ public class Fonts {
         typeFacesMap.put("felbridge_light", 16);
         typeFacesMap.put("felbridge_bold", 17);
     }
-
-    private final static SparseArray<Typeface> mTypefaces = new SparseArray<Typeface>(20);
 
     /**
      * Obtain typeface.

@@ -3,6 +3,8 @@ package id.co.datascrip.app_collector_systems.proses;
 import android.app.ProgressDialog;
 import android.content.Context;
 
+import androidx.annotation.NonNull;
+
 import org.json.JSONArray;
 import org.json.JSONObject;
 
@@ -18,9 +20,9 @@ import retrofit2.Response;
  * Created by alamsyah_putra on 4/27/2017.
  */
 public class Proses_Get_Data {
-    private Context context;
+    private final Context context;
     private ProgressDialog progressDialog;
-    private IC_Get_Data IC;
+    private final IC_Get_Data IC;
 
     public Proses_Get_Data(Context context, boolean showDialog) {
         this.context = context;
@@ -38,7 +40,7 @@ public class Proses_Get_Data {
         if (AYHelper.isOnline(context)) {
             IC.GetBlacklistApp().enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     String respon = Retro.getString(response);
                     if (Retro.isSuccess(response, respon)) {
                         AYHelper.list_blacklist_app.clear();
@@ -56,7 +58,7 @@ public class Proses_Get_Data {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable throwable) {
                     if (progressDialog != null)
                         progressDialog.dismiss();
                 }

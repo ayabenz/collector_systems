@@ -4,11 +4,11 @@ package id.co.datascrip.app_collector_systems.data;
  * Created by alamsyah_putra on 3/30/2017.
  */
 public class DataFaktur {
-    private String id, fakturno;
-    private Integer tanda,nourut;
     boolean selected = false;
+    private String id, fakturno;
+    private Integer tanda, nourut;
 
-    public DataFaktur(){
+    public DataFaktur() {
 
     }
 
@@ -24,17 +24,33 @@ public class DataFaktur {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getInvoceno(){return fakturno;}
-    public void setInvoceno(String faktur){this.fakturno = faktur;}
+    public String getInvoceno() {
+        return fakturno;
+    }
 
-    public Integer getTanda(){ return tanda;}
-    public void setTanda(Integer tanda){this.tanda = tanda;}
+    public void setInvoceno(String faktur) {
+        this.fakturno = faktur;
+    }
 
-    public Integer getNourut(){return nourut;}
-    public void setNourut(Integer nourut){ this.nourut = nourut;}
+    public Integer getTanda() {
+        return tanda;
+    }
+
+    public void setTanda(Integer tanda) {
+        this.tanda = tanda;
+    }
+
+    public Integer getNourut() {
+        return nourut;
+    }
+
+    public void setNourut(Integer nourut) {
+        this.nourut = nourut;
+    }
 
 }

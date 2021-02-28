@@ -1,19 +1,20 @@
-package id.co.datascrip.app_collector_systems.fragmet;
+package id.co.datascrip.app_collector_systems.fragment;
 
 
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.os.Bundle;
-import androidx.annotation.Nullable;
-import androidx.fragment.app.Fragment;
-import androidx.fragment.app.FragmentActivity;
-
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
 import android.widget.ListView;
 import android.widget.TextView;
+
+import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
+import androidx.fragment.app.Fragment;
+import androidx.fragment.app.FragmentActivity;
 
 import org.json.JSONArray;
 import org.json.JSONObject;
@@ -22,7 +23,7 @@ import java.util.ArrayList;
 
 import id.co.datascrip.app_collector_systems.R;
 import id.co.datascrip.app_collector_systems.SessionManager;
-import id.co.datascrip.app_collector_systems.data.DataBerhasil;
+import id.co.datascrip.app_collector_systems.data.DataGagal;
 import id.co.datascrip.app_collector_systems.helper.AYHelper;
 import okhttp3.ResponseBody;
 import retrofit2.Call;
@@ -32,31 +33,32 @@ import retrofit2.Response;
 /**
  * A simple {@link Fragment} subclass.
  */
-public class berhasil extends Fragment {
+public class gagal extends Fragment {
     private ListView lvData;
-    private ArrayList<DataBerhasil> data;
+    private ArrayList<DataGagal> data;
     //private AQuery query;
     private SessionManager sesi;
     private CustomAdapter adapter;
 
-    public berhasil() {
+
+    public gagal() {
         // Required empty public constructor
     }
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_berhasil, container, false);
+        return inflater.inflate(R.layout.fragment_gagal, container, false);
     }
 
     @Override
     public void onViewCreated(View view, @Nullable Bundle savedInstanceState) {
-        lvData = (ListView) view.findViewById(R.id.list_berhasil);
+        lvData = view.findViewById(R.id.list_gagal);
         //query = new AQuery(getActivity());
         sesi = new SessionManager(getActivity());
         data = new ArrayList<>();
-
 
         if (!AYHelper.isOnline(getActivity())) {
             AYHelper.alertMessageNoInternet(getActivity());
@@ -64,6 +66,58 @@ public class berhasil extends Fragment {
             getData();
         }
     }
+
+    /*
+    private void getData() {
+        String url = AYHelper.BASE_URL + "api_collector/get_data_history";
+        Map<String, String> param = new HashMap<>();
+        param.put("colector", sesi.getIduser());
+        param.put("tipe", "Gagal");
+        try {
+            AYHelper.pre("Url : " + url + ", params " + param.toString());
+            query.ajax(url, param, String.class,new AjaxCallback<String>(){
+                @Override
+                public void callback(String url, String hasil, AjaxStatus status) {
+                    if (hasil != null) {
+                        AYHelper.pre("Respon : " + hasil);
+                        try {
+                            JSONObject json = new JSONObject(hasil);
+                            String result = json.getString("result");
+                            String pesan = json.getString("msg");
+                            if(result.equalsIgnoreCase("true")){
+                                JSONArray jsonArray = json.getJSONArray("data");
+                                for(int a=0; a<jsonArray.length(); a++) {
+                                    JSONObject object = jsonArray.getJSONObject(a);
+                                    DataGagal b = new DataGagal();
+                                    b.setId(object.getString("id"));
+                                    b.setFakturno(object.getString("no_inv"));
+                                    b.setCust_no(object.getString("customer_no"));
+                                    b.setCust_name(object.getString("cust_name"));
+                                    b.setHasildesc(object.getString("hasil_desc"));
+                                    b.setHasilkunjung(object.getString("hasil_kunjungan"));
+                                    b.setJampickup(object.getString("pickup"));
+                                    b.setJammulai(object.getString("mulai"));
+                                    b.setJamselesai(object.getString("complete_date"));
+                                    //memasukkan data kedalam model booking
+                                    data.add(b);
+                                    //measukkan data arraylist kedalam custom adapter
+                                    adapter = new CustomAdapter(getActivity(), data);
+                                    lvData.setAdapter(adapter);
+                                }
+                            }
+                        }catch (Exception e) {
+                            e.printStackTrace();
+                            AYHelper.alert_dialog(getActivity(), "Pehatian",e.getMessage());
+                        }
+                    }
+                }
+            });
+        }catch (Exception e){
+            e.printStackTrace();
+            AYHelper.alert_dialog(getActivity(), "Pehatian",e.getMessage());
+        }
+    }
+    */
 
     private void getData() {
         try {
@@ -73,12 +127,11 @@ public class berhasil extends Fragment {
             progressDialog.setIndeterminate(true);
             progressDialog.show();
             AYHelper.IC_History icHistory = AYHelper.createRetrofit(getActivity()).create(AYHelper.IC_History.class);
-            icHistory.getHistory(sesi.getIduser(), "Berhasil").enqueue(new Callback<ResponseBody>() {
+            icHistory.getHistory(sesi.getIduser(), "Gagal").enqueue(new Callback<ResponseBody>() {
                 @Override
-                public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                public void onResponse(@NonNull Call<ResponseBody> call, @NonNull Response<ResponseBody> response) {
                     try {
                         String hasil = response.body().string();
-                        //AYHelper.pre("Respon : " + hasil);
                         JSONObject json = new JSONObject(hasil);
                         String result = json.getString("result");
                         String pesan = json.getString("msg");
@@ -86,7 +139,7 @@ public class berhasil extends Fragment {
                             JSONArray jsonArray = json.getJSONArray("data");
                             for (int a = 0; a < jsonArray.length(); a++) {
                                 JSONObject object = jsonArray.getJSONObject(a);
-                                DataBerhasil b = new DataBerhasil();
+                                DataGagal b = new DataGagal();
                                 b.setId(object.getString("id"));
                                 b.setFakturno(object.getString("no_inv"));
                                 b.setCust_no(object.getString("customer_no"));
@@ -111,7 +164,7 @@ public class berhasil extends Fragment {
                 }
 
                 @Override
-                public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                public void onFailure(@NonNull Call<ResponseBody> call, @NonNull Throwable throwable) {
                     AYHelper.alert_dialog(getActivity(), "Perhatian", throwable.getMessage());
                     progressDialog.dismiss();
                 }
@@ -123,15 +176,17 @@ public class berhasil extends Fragment {
         }
     }
 
+
     private class CustomAdapter extends BaseAdapter {
-        private Context c;
-        private ArrayList<DataBerhasil> datas;
+        private final Context c;
+        private final ArrayList<DataGagal> datas;
         private LayoutInflater inflater = null;
 
-        public CustomAdapter(FragmentActivity activity, ArrayList<DataBerhasil> data) {
+        public CustomAdapter(FragmentActivity activity, ArrayList<DataGagal> data) {
             this.c = activity;
             this.datas = data;
         }
+
 
         @Override
         public int getCount() {
@@ -150,15 +205,16 @@ public class berhasil extends Fragment {
 
         @Override
         public View getView(int position, View convertView, ViewGroup parent) {
-            inflater = (LayoutInflater) c.getSystemService(c.LAYOUT_INFLATER_SERVICE);
-            View v = inflater.inflate(R.layout.list_row_berhasil, null);
-            TextView txt_id = (TextView) v.findViewById(R.id.txt_b_id);
-            TextView txt_inv = (TextView) v.findViewById(R.id.txt_b_invoice_no);
-            TextView txt_mulai = (TextView) v.findViewById(R.id.txt_b_mulai);
-            TextView txt_selesai = (TextView) v.findViewById(R.id.txt_b_complete);
-            TextView txt_hasil = (TextView) v.findViewById(R.id.txt_b_hasil);
+            inflater = (LayoutInflater) c.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            View v = inflater.inflate(R.layout.list_row_gagal, null);
+            TextView txt_id = v.findViewById(R.id.txt_g_id);
+            TextView txt_inv = v.findViewById(R.id.txt_g_invoice_no);
+            TextView txt_mulai = v.findViewById(R.id.txt_g_mulai);
+            TextView txt_selesai = v.findViewById(R.id.txt_g_complete);
+            TextView txt_hasil = v.findViewById(R.id.txt_g_hasil);
 
-            DataBerhasil b = datas.get(position);
+            DataGagal b = datas.get(position);
+
             txt_id.setText(b.getId());
             txt_inv.setText(b.getFakturno());
             txt_mulai.setText("Mulai : " + AYHelper.tglJamToInd(b.getJampickup()));
@@ -168,5 +224,4 @@ public class berhasil extends Fragment {
             return v;
         }
     }
-
 }

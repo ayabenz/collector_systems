@@ -14,8 +14,8 @@ import id.co.datascrip.app_collector_systems.data.DataReason;
  * Created by alamsyah_putra on 4/3/2017.
  */
 public class ReasonSQLite {
-    private Context context;
-    private DatabaseHelper dbHelper;
+    private final Context context;
+    private final DatabaseHelper dbHelper;
     private SQLiteDatabase db;
 
     public ReasonSQLite(Context context) {
@@ -58,11 +58,11 @@ public class ReasonSQLite {
     }
 
 
-    public DataReason getAlasanNotIn(int id){
+    public DataReason getAlasanNotIn(int id) {
         db = dbHelper.getReadableDatabase();
         DataReason alasan = new DataReason();
         String query = "SELECT * FROM " + ConstSQLite.TABLE_ALASAN +
-                " WHERE " + ConstSQLite.ALASAN_CODE + " NOT IN (" + String.valueOf(id) + ")";
+                " WHERE " + ConstSQLite.ALASAN_CODE + " NOT IN (" + id + ")";
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
             alasan.setID(c.getInt(c.getColumnIndex(ConstSQLite.ALASAN_ID)));
@@ -79,7 +79,7 @@ public class ReasonSQLite {
         db = dbHelper.getReadableDatabase();
         DataReason alasan = new DataReason();
         String query = "SELECT * FROM " + ConstSQLite.TABLE_ALASAN +
-                " WHERE " + ConstSQLite.ALASAN_ID + " = " + String.valueOf(id);
+                " WHERE " + ConstSQLite.ALASAN_ID + " = " + id;
         Cursor c = db.rawQuery(query, null);
         if (c.moveToFirst()) {
             alasan.setID(c.getInt(c.getColumnIndex(ConstSQLite.ALASAN_ID)));

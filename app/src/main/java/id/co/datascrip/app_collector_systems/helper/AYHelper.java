@@ -6,7 +6,6 @@ import android.annotation.TargetApi;
 import android.app.ActivityManager;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.ApplicationInfo;
 import android.content.pm.PackageInfo;
@@ -74,33 +73,24 @@ import retrofit2.http.POST;
 @SuppressLint("SimpleDateFormat")
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class AYHelper {
-    private static final int DEBUG = 1;
     public static final String APP = "Collector Systems Application";
-
-    //public static final String BASE_URL = "https://intraweb.datascrip.co.id/iMos/";
-    public static final String BASE_URL = "https://intraweb.datascrip.co.id/demo/iMos/";
+    public static final String BASE_URL = "https://intraweb.datascrip.co.id/iMos/";
+    //public static final String BASE_URL = "https://intraweb.datascrip.co.id/demo/iMos/";
     public static final String BASE_URL_IMAGE = "https://intraweb.datascrip.co.id/iMos/upload/employee/"; /*"https://intraweb.datascrip.co.id/demo/iMos/upload/employee/";*/
-
     public static final String BASE_URL_IMAGE_ITEM = "https://intraweb.datascrip.co.id/demo/iMos/upload/";
-
     public static final String ACTION_GPS_LISTENER = "android.location.PROVIDERS_CHANGED";
     public static final String CURRENCY_SYMBOL = "Rp. ";
-
     public static final int GPS_SETTING = 1111;
     public static final int DATE_TIME_SETTING = 2222;
-
     public static final int NOTIFICATION_ID = 1992;
-
     public static final int FLAG_INTENT_REMINDER = 11111;
     public static final int FLAG_INTENT_AUTO_CHECKOUT = 22222;
-
     public static final int DELAY_SERVICE = 1000 * 60; // 1 minute
     public static final int DELAY_REMINDER = 1000 * 60 * 60; // 1 jam
     public static final int AUTO_CHECKOUT = 1000 * 60 * 60 * 2; // 2 jam
-
-    public static ArrayList<String> list_blacklist_app = new ArrayList<>();
-
     public static final String URL_GET_ALL_REASON = "api_collector/get_all_reason";
+    private static final int DEBUG = 1;
+    public static ArrayList<String> list_blacklist_app = new ArrayList<>();
 
     public static void alert(Context context, String title, String message) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -113,10 +103,8 @@ public class AYHelper {
 
 
         // Setting OK Button
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which) {
+        alertDialog.setButton("OK", (dialog, which) -> {
 
-            }
         });
 
         // Showing Alert Message
@@ -154,13 +142,10 @@ public class AYHelper {
         alertBuilder.setTitle("GPS Setting");
         alertBuilder.setMessage("GPS tidak Aktif. Anda harus Mengaktifkan GPS Terlebih dahulu?");
 
-        alertBuilder.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                context.startActivity(intent);
-            }
+        alertBuilder.setPositiveButton("Setting", (dialog, which) -> {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            context.startActivity(intent);
         });
 
         //closed agar user harus aktifkan gps terlebih dahulu.
@@ -180,21 +165,11 @@ public class AYHelper {
         try {
             ConnectivityManager cm = (ConnectivityManager) c.getSystemService(Context.CONNECTIVITY_SERVICE);
             NetworkInfo netInfo = cm.getActiveNetworkInfo();
-            if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-                return true;
-            } else {
-                return false;
-            }
-        }catch (Exception e){
-            pesan(c,e.getMessage());
+            return netInfo != null && netInfo.isConnectedOrConnecting();
+        } catch (Exception e) {
+            pesan(c, e.getMessage());
         }
         return false;
-    }
-
-    public interface IC_History {
-        @FormUrlEncoded
-        @POST("api_collector/get_data_history")
-        Call<ResponseBody> getHistory(@Field("colector") String collector, @Field("tipe") String tipe);
     }
 
     public static boolean isConnected(Context context) {
@@ -211,16 +186,10 @@ public class AYHelper {
                 .setCancelable(false)
                 .setTitle("Informasi Internet")
                 .setNegativeButton("Tutup",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog,
-                                                @SuppressWarnings("unused") final int id) {
-                                dialog.cancel();
-                            }
-                        });
+                        (dialog, id) -> dialog.cancel());
         final AlertDialog alert = builder.create();
         alert.show();
     }
-
 
     public static String tglJamSekarangFile() {
         DateFormat formatter1 = new SimpleDateFormat("yyyyMMdd_HHmmss");
@@ -318,40 +287,24 @@ public class AYHelper {
     }
 
     public static boolean isEmpty(EditText etText) {
-        if (etText.getText().toString().trim().length() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+        return etText.getText().toString().trim().length() <= 0;
     }
 
-    public static boolean isStringEmpyt(String etText){
-        if (etText.trim().length() > 0) {
-            return false;
-        } else {
-            return true;
-        }
+    public static boolean isStringEmpyt(String etText) {
+        return etText.trim().length() <= 0;
     }
 
     public static boolean isCompare(EditText etText, EditText ex) {
         String a = etText.getText().toString();
         String b = ex.getText().toString();
-        if (a.equals(b)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !a.equals(b);
     }
 
     public static boolean isBatasUsia(EditText etText, int batas) {
         String a = etText.getText().toString();
         Date usia = strTodate(a);
         Date sekarang = dateAddYear(strTodate(tglSekarang()), batas);
-        if (usia.before(sekarang)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !usia.before(sekarang);
     }
 
     public static void pre(String pesan) {
@@ -370,11 +323,7 @@ public class AYHelper {
         Date sekarang = dateKurang(strTodate(tglSekarang()), batas);
         pre("tanggal pilih : " + usia.toString() + " --- tanggal batas : "
                 + sekarang.toString());
-        if (usia.after(sekarang)) {
-            return false;
-        } else {
-            return true;
-        }
+        return !usia.after(sekarang);
     }
 
     /**
@@ -398,20 +347,13 @@ public class AYHelper {
     }
 
     public static boolean minLength(EditText etText, int jmlh) {
-        if (etText.getText().toString().trim().length() >= jmlh) {
-            return false;
-        } else {
-            return true;
-        }
+        return etText.getText().toString().trim().length() < jmlh;
     }
 
     // untuk check koneksi internet
     public static boolean isOnline(ConnectivityManager cm) {
         NetworkInfo netInfo = cm.getActiveNetworkInfo();
-        if (netInfo != null && netInfo.isConnectedOrConnecting()) {
-            return true;
-        }
-        return false;
+        return netInfo != null && netInfo.isConnectedOrConnecting();
     }
 
     // md5 encrypt function
@@ -421,7 +363,7 @@ public class AYHelper {
             MessageDigest digest = MessageDigest
                     .getInstance("MD5");
             digest.update(s.getBytes());
-            byte messageDigest[] = digest.digest();
+            byte[] messageDigest = digest.digest();
 
             // Create Hex String
             StringBuffer hexString = new StringBuffer();
@@ -591,6 +533,18 @@ public class AYHelper {
         return rupiah;
     }
 
+    public static void alert_dialog(Context context, String title, String message) {
+        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
+        // Setting Dialog Title
+        alertDialog.setTitle(title);
+        // Setting Dialog Message
+        alertDialog.setMessage(message);
+        alertDialog.setButton("OK", (dialog, which) -> {
+        });
+        // Showing Alert Message
+        alertDialog.show();
+    }
+
     /*
     public static String getDeviceId(Context context) {
         final String deviceId = ((TelephonyManager) context.getSystemService(Context.TELEPHONY_SERVICE)).getDeviceId();
@@ -622,19 +576,6 @@ public class AYHelper {
 
      */
 
-    public static void alert_dialog(Context context, String title, String message) {
-        AlertDialog alertDialog = new AlertDialog.Builder(context).create();
-        // Setting Dialog Title
-        alertDialog.setTitle(title);
-        // Setting Dialog Message
-        alertDialog.setMessage(message);
-        alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int which){}
-        });
-        // Showing Alert Message
-        alertDialog.show();
-    }
-
     public static void alert(Context context, String title, String message,
                              Boolean status) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();
@@ -651,9 +592,7 @@ public class AYHelper {
 //                    : R.drawable.erroricon);
 
             // Setting OK Button
-            alertDialog.setButton("OK", new DialogInterface.OnClickListener() {
-                public void onClick(DialogInterface dialog, int which) {
-                }
+            alertDialog.setButton("OK", (dialog, which) -> {
             });
 
         // Showing Alert Message
@@ -715,12 +654,12 @@ public class AYHelper {
     public static int posisiPanen(String tglTanam, String masapanen) {
         int hasil = 1;
 
-        String x[] = tglTanam.split("-");
+        String[] x = tglTanam.split("-");
         tglTanam = x[2] + "-" + x[1] + "-" + x[0];
         //hitung selisih tanggal sekarang dengan tanggal tanam
         int selisih = getBedaHari(strTodate(tglSekarang()), strTodate(tglTanam));
 
-        int range = (int) Integer.parseInt(masapanen) / 3;
+        int range = Integer.parseInt(masapanen) / 3;
         int range1 = range + range;
         int range2 = range + range1;
 
@@ -733,8 +672,8 @@ public class AYHelper {
             hasil = 3;
         }
 
-        log("selesih : " + String.valueOf(selisih) + ", range :"
-                + String.valueOf(range) + ", hasil :" + String.valueOf(hasil));
+        log("selesih : " + selisih + ", range :"
+                + range + ", hasil :" + hasil);
 
 
         return hasil;
@@ -747,28 +686,28 @@ public class AYHelper {
     }
 
     public static String tglToInd(String tgl) {
-        String x[] = tgl.split("-");
+        String[] x = tgl.split("-");
         return x[2] + " " + getBulan(x[1]) + " " + x[0];
     }
 
     public static String tglToInd3(String tgl) {
-        String x[] = tgl.split(" ")[0].split("-");
+        String[] x = tgl.split(" ")[0].split("-");
         return x[2] + " " + getBulan(x[1]) + " " + x[0];
     }
 
     public static String tglJamToInd(String tgl) {
-        String x[] = tgl.split("-");
-        String x1[] = x[2].split(" ");
+        String[] x = tgl.split("-");
+        String[] x1 = x[2].split(" ");
         return x1[0] + " " + getBulan(x[1]) + " " + x[0] + " " + x1[1];
     }
 
     public static String tglToIndBlnThn(String tgl) {
-        String x[] = tgl.split("-");
+        String[] x = tgl.split("-");
         return getBulan(x[1]) + " " + x[0];
     }
 
     public static String tglToInd2(String tgl) {
-        String x[] = tgl.split("-");
+        String[] x = tgl.split("-");
         return x[2] + "/" + x[1] + "/" + x[0].substring(2);
     }
 
@@ -861,6 +800,44 @@ public class AYHelper {
         return hasil;
     }
 
+    //Decodes image and scales it to reduce memory consumption
+    private static Bitmap decodeFile(File f) {
+
+        try {
+            //Decode image size
+            BitmapFactory.Options o = new BitmapFactory.Options();
+            o.inJustDecodeBounds = true;
+            FileInputStream stream1 = new FileInputStream(f);
+            BitmapFactory.decodeStream(stream1, null, o);
+            stream1.close();
+            //Find the correct scale value. It should be the power of 2.
+            // Set width/height of recreated image
+            final int REQUIRED_SIZE = 85;
+            int width_tmp = o.outWidth, height_tmp = o.outHeight;
+            int scale = 1;
+            while (true) {
+                if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
+                    break;
+                width_tmp /= 2;
+                height_tmp /= 2;
+                scale *= 2;
+            }
+
+            //decode with current scale values
+            BitmapFactory.Options o2 = new BitmapFactory.Options();
+            o2.inSampleSize = scale;
+            FileInputStream stream2 = new FileInputStream(f);
+            Bitmap bitmap = BitmapFactory.decodeStream(stream2, null, o2);
+            stream2.close();
+            return bitmap;
+
+        } catch (FileNotFoundException e) {
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 //    public static Bitmap getBitmap(String url,Context context)
 //    {
 //        FileCache fileCache=new FileCache(context);
@@ -901,44 +878,6 @@ public class AYHelper {
 //            return null;
 //        }
 //    }
-
-    //Decodes image and scales it to reduce memory consumption
-    private static Bitmap decodeFile(File f) {
-
-        try {
-            //Decode image size
-            BitmapFactory.Options o = new BitmapFactory.Options();
-            o.inJustDecodeBounds = true;
-            FileInputStream stream1 = new FileInputStream(f);
-            BitmapFactory.decodeStream(stream1, null, o);
-            stream1.close();
-            //Find the correct scale value. It should be the power of 2.
-            // Set width/height of recreated image
-            final int REQUIRED_SIZE = 85;
-            int width_tmp = o.outWidth, height_tmp = o.outHeight;
-            int scale = 1;
-            while (true) {
-                if (width_tmp / 2 < REQUIRED_SIZE || height_tmp / 2 < REQUIRED_SIZE)
-                    break;
-                width_tmp /= 2;
-                height_tmp /= 2;
-                scale *= 2;
-            }
-
-            //decode with current scale values
-            BitmapFactory.Options o2 = new BitmapFactory.Options();
-            o2.inSampleSize = scale;
-            FileInputStream stream2 = new FileInputStream(f);
-            Bitmap bitmap = BitmapFactory.decodeStream(stream2, null, o2);
-            stream2.close();
-            return bitmap;
-
-        } catch (FileNotFoundException e) {
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-        return null;
-    }
 
     public static void CopyStream(InputStream is, OutputStream os) {
         final int buffer_size = 1024;
@@ -993,16 +932,16 @@ public class AYHelper {
         return Base64.encodeToString(byteArray, Base64.DEFAULT);
     }
 
-    public static double hitungJarak(double lat1, double lng1, double lat2, double lng2, String unit){
+    public static double hitungJarak(double lat1, double lng1, double lat2, double lng2, String unit) {
 
         double earthRadius = 6371.0;
-        if(unit.equalsIgnoreCase("M")){
+        if (unit.equalsIgnoreCase("M")) {
             earthRadius = 6371 * 1000;
-        }else if(unit.equalsIgnoreCase("N")){
+        } else if (unit.equalsIgnoreCase("N")) {
             earthRadius = 3958.75; // miles (or 6371.0 kilometers)
         }
 
-        double dlat= Math.toRadians(lat2 - lat1);
+        double dlat = Math.toRadians(lat2 - lat1);
         double dlng = Math.toRadians(lng2 - lng1);
         double sindLat = Math.sin(dlat / 2);
         double sindLng = Math.sin(dlng / 2);
@@ -1011,7 +950,7 @@ public class AYHelper {
                 * Math.cos(Math.toRadians(lat1))
                 * Math.cos(Math.toRadians(lat2));
 
-        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1-a));
+        double c = 2 * Math.atan2(Math.sqrt(a), Math.sqrt(1 - a));
         double dist = earthRadius * c;
 
         return dist;
@@ -1148,14 +1087,20 @@ public class AYHelper {
         }
     }
 
-    public static String GetVersion(){
+    public static String GetVersion() {
         String versi = BuildConfig.VERSION_NAME;
-        if(isStringEmpyt(versi)){
+        if (isStringEmpyt(versi)) {
             versi = "0.0";
         }
         if (AYHelper.BASE_URL.contains("demo"))
             versi = versi + " Demo";
         return versi;
+    }
+
+    public interface IC_History {
+        @FormUrlEncoded
+        @POST("api_collector/get_data_history")
+        Call<ResponseBody> getHistory(@Field("colector") String collector, @Field("tipe") String tipe);
     }
 
 }

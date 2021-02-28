@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.AlertDialog;
 import android.app.Service;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -14,27 +13,26 @@ import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
 import android.provider.Settings;
-import androidx.core.content.ContextCompat;
 import android.util.Log;
+
+import androidx.core.content.ContextCompat;
 
 
 public class GPSTracker extends Service implements LocationListener {
-    private Context context = null;
+    public static final String NEW_POSITION = "newPosition";
+    private static final long MIN_DISTANCE = 1; // 10 meter
+    private static final long MIN_TIME = 1000 * 1 * 1; // 1minute
+    protected LocationManager locationManager;
     boolean isGPSEnabled = false, isNetworkEnabled = false,
             canGetLocation = false;
-
     Location location = null;
     double latitude, longitude;
-
-    private static final long MIN_DISTANCE = (long) 1; // 10 meter
-    private static final long MIN_TIME = 1000 * 1 * 1; // 1minute
-
-    protected LocationManager locationManager;
-    public static final String NEW_POSITION = "newPosition";
+    private Context context = null;
 
     public GPSTracker() {
         getLocation();
     }
+
     public GPSTracker(Context c) {
         this.context = c;
         getLocation();
@@ -59,9 +57,10 @@ public class GPSTracker extends Service implements LocationListener {
                 // get lat/lng by network
                 if (isNetworkEnabled) {
                     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
-                        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
+                        if (ContextCompat.checkSelfPermission(this.getActivity(), Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED)
                             locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
-                    } else locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
+                    } else
+                        locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER, MIN_TIME, MIN_DISTANCE, this);
                     Log.d("network", "network enabled");
                     if (locationManager != null) {
                         location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
@@ -145,23 +144,13 @@ public class GPSTracker extends Service implements LocationListener {
         alertBuilder.setTitle("GPS Setting");
         alertBuilder.setMessage("GPS tidak Aktif. Anda harus Mengaktifkan GPS Terlebih dahulu?");
 
-        alertBuilder.setPositiveButton("Setting", new DialogInterface.OnClickListener() {
+        alertBuilder.setPositiveButton("Setting", (dialog, which) -> {
+            Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            startActivity(intent);
 
-            @Override
-            public void onClick(DialogInterface dialog, int which) {
-                Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                startActivity(intent);
-
-            }
         });
-        alertBuilder.setNegativeButton("Cancel", new DialogInterface.OnClickListener() {
-
-            public void onClick(DialogInterface dialog, int which) {
-                dialog.cancel();
-
-            }
-        });
+        alertBuilder.setNegativeButton("Cancel", (dialog, which) -> dialog.cancel());
     }
 
     public void alertMessageNoInternet() {
@@ -171,12 +160,7 @@ public class GPSTracker extends Service implements LocationListener {
                 .setCancelable(false)
                 .setTitle("Informasi Internet")
                 .setNegativeButton("Tutup",
-                        new DialogInterface.OnClickListener() {
-                            public void onClick(final DialogInterface dialog,
-                                                @SuppressWarnings("unused") final int id) {
-                                dialog.cancel();
-                            }
-                        });
+                        (dialog, id) -> dialog.cancel());
         final AlertDialog alert = builder.create();
         alert.show();
     }

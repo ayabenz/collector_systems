@@ -19,5 +19,4 @@ public class Constan {
     public static int TAKE_PLACE = 321;
 
 
-
 }

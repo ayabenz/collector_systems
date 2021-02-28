@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.widget.Toolbar;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentManager;
@@ -11,9 +12,9 @@ import androidx.fragment.app.FragmentPagerAdapter;
 import androidx.viewpager.widget.ViewPager;
 
 import id.co.datascrip.app_collector_systems.R;
-import id.co.datascrip.app_collector_systems.fragmet.berhasil;
-import id.co.datascrip.app_collector_systems.fragmet.gagal;
-import id.co.datascrip.app_collector_systems.fragmet.pending;
+import id.co.datascrip.app_collector_systems.fragment.berhasil;
+import id.co.datascrip.app_collector_systems.fragment.gagal;
+import id.co.datascrip.app_collector_systems.fragment.pending;
 import id.co.datascrip.app_collector_systems.helper.BaseActivity;
 import it.neokree.materialtabs.MaterialTab;
 import it.neokree.materialtabs.MaterialTabHost;
@@ -23,18 +24,18 @@ public class history_collector extends BaseActivity implements MaterialTabListen
     private ViewPager pager;
     private MaterialTabHost tabHost;
     private ViewPagerAdapter adapter;
-    private TextView txt_total_berhasil,txt_total_gagal,txt_total_pending;
+    private TextView txt_total_berhasil, txt_total_gagal, txt_total_pending;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_history_collector);
-        Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        Toolbar toolbar = findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         adapter = new ViewPagerAdapter(getSupportFragmentManager());
-        tabHost = (MaterialTabHost) findViewById(R.id.tabHost);
-        pager = (ViewPager) findViewById(R.id.pager);
+        tabHost = findViewById(R.id.tabHost);
+        pager = findViewById(R.id.pager);
         pager.setAdapter(adapter);
         pager.setOffscreenPageLimit(3);
         pager.addOnPageChangeListener(new ViewPager.OnPageChangeListener() {
@@ -54,7 +55,7 @@ public class history_collector extends BaseActivity implements MaterialTabListen
             }
         });
 
-        for (int i = 0 ;i<adapter.getCount(); i++){
+        for (int i = 0; i < adapter.getCount(); i++) {
             tabHost.addTab(tabHost.newTab().setText(adapter.getPageTitle(i)).setTabListener(this));
         }
 
@@ -75,19 +76,27 @@ public class history_collector extends BaseActivity implements MaterialTabListen
 
     }
 
-    private class ViewPagerAdapter extends FragmentPagerAdapter {
+    @Override
+    public void onBackPressed() {
+        Intent i = new Intent(c, main_menu.class);
+        startActivity(i);
+        finish();
+    }
+
+    private static class ViewPagerAdapter extends FragmentPagerAdapter {
 
         public ViewPagerAdapter(FragmentManager fm) {
             super(fm);
         }
 
+        @NonNull
         @Override
         public Fragment getItem(int position) {
-            if ( position == 0) {
+            if (position == 0) {
                 return new berhasil();
-            }else if(position == 1){
+            } else if (position == 1) {
                 return new gagal();
-            }else{
+            } else {
                 return new pending();
             }
         }
@@ -99,20 +108,13 @@ public class history_collector extends BaseActivity implements MaterialTabListen
 
         @Override
         public CharSequence getPageTitle(int position) {
-            if (position == 0){
+            if (position == 0) {
                 return "Berhasil";
-            }else if(position == 1){
+            } else if (position == 1) {
                 return "Gagal";
-            } else{
+            } else {
                 return "Pending";
             }
         }
-    }
-
-    @Override
-    public void onBackPressed() {
-        Intent i = new Intent(c, main_menu.class);
-        startActivity(i);
-        finish();
     }
 }

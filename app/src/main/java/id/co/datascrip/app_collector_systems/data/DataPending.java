@@ -4,9 +4,9 @@ package id.co.datascrip.app_collector_systems.data;
  * Created by alamsyah_putra on 4/6/2017.
  */
 public class DataPending {
-    private String id, fakturno,cust_no,cust_name,hasildesc,hasilkunjung,jampickup,jammulai,jamselesai,alamat;
+    private String id, fakturno, cust_no, cust_name, hasildesc, hasilkunjung, jampickup, jammulai, jamselesai, alamat;
 
-    public DataPending(){
+    public DataPending() {
 
     }
 
@@ -24,20 +24,34 @@ public class DataPending {
         this.alamat = alamat;
     }
 
-    public String getAlamat(){return  alamat;}
-    public void setAlamat(String alamat){ this.alamat = alamat;}
+    public String getAlamat() {
+        return alamat;
+    }
+
+    public void setAlamat(String alamat) {
+        this.alamat = alamat;
+    }
 
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getFakturno(){return fakturno;}
-    public void setFakturno(String faktur){this.fakturno = faktur;}
+    public String getFakturno() {
+        return fakturno;
+    }
 
-    public String getCust_no(){return cust_no;}
+    public void setFakturno(String faktur) {
+        this.fakturno = faktur;
+    }
+
+    public String getCust_no() {
+        return cust_no;
+    }
+
     public void setCust_no(String cust_no) {
         this.cust_no = cust_no;
     }
@@ -45,6 +59,7 @@ public class DataPending {
     public String getCust_name() {
         return cust_name;
     }
+
     public void setCust_name(String cust_name) {
         this.cust_name = cust_name;
     }
@@ -52,6 +67,7 @@ public class DataPending {
     public String getHasildesc() {
         return hasildesc;
     }
+
     public void setHasildesc(String hasildesc) {
         this.hasildesc = hasildesc;
     }
@@ -59,6 +75,7 @@ public class DataPending {
     public String getHasilkunjung() {
         return hasilkunjung;
     }
+
     public void setHasilkunjung(String hasilkunjung) {
         this.hasilkunjung = hasilkunjung;
     }
@@ -66,6 +83,7 @@ public class DataPending {
     public String getJammulai() {
         return jammulai;
     }
+
     public void setJammulai(String jammulai) {
         this.jammulai = jammulai;
     }
@@ -73,6 +91,7 @@ public class DataPending {
     public String getJampickup() {
         return jampickup;
     }
+
     public void setJampickup(String jampickup) {
         this.jampickup = jampickup;
     }
@@ -80,6 +99,7 @@ public class DataPending {
     public String getJamselesai() {
         return jamselesai;
     }
+
     public void setJamselesai(String jamselesai) {
         this.jamselesai = jamselesai;
     }

@@ -4,7 +4,6 @@ import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
-import android.content.DialogInterface;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Location;
@@ -12,30 +11,27 @@ import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
 import android.provider.Settings;
+
 import androidx.core.app.ActivityCompat;
 
 public final class GPS implements LocationListener, ActivityCompat.OnRequestPermissionsResultCallback {
-    private static GPS _instance = new GPS();
+    public static final int LOCATION_REQUEST_CODE = 200;
+    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
+    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
+    private static final GPS _instance = new GPS();
     private static Activity _activity;
-
     private static boolean _isGPSEnabled = false;
     private static boolean _isNetworkEnabled = false;
     private static boolean _canGetLocation = false;
     private static boolean _isPermissionEnabled = false;
-
+    private static LocationManager _locationManager;
     private Location _location;
     private double _latitude;
     private double _longitude;
-
-    private static final long MIN_DISTANCE_CHANGE_FOR_UPDATES = 1; // 10 meters
-    private static final long MIN_TIME_BW_UPDATES = 1; // 1 minute
-
-    private static LocationManager _locationManager;
-
     private LocationPermissionResponseListener _locationPermissionListener;
-    public static final int LOCATION_REQUEST_CODE = 200;
 
-    private GPS() {}
+    private GPS() {
+    }
 
     public static GPS sharedInstance(Activity activity) {
         _activity = activity;
@@ -43,17 +39,9 @@ public final class GPS implements LocationListener, ActivityCompat.OnRequestPerm
         _isGPSEnabled = _locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
         _isNetworkEnabled = _locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
 
-        if (!_isGPSEnabled && !_isNetworkEnabled) {
-            _canGetLocation = false;
-        } else {
-            _canGetLocation = true;
-        }
+        _canGetLocation = _isGPSEnabled || _isNetworkEnabled;
 
-        if (ActivityCompat.checkSelfPermission(_activity, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED) {
-            _isPermissionEnabled = false;
-        } else {
-            _isPermissionEnabled = true;
-        }
+        _isPermissionEnabled = ActivityCompat.checkSelfPermission(_activity, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED;
 
         return _instance;
     }
@@ -134,20 +122,14 @@ public final class GPS implements LocationListener, ActivityCompat.OnRequestPerm
         alertDialog.setMessage("GPS is not enabled. Do you want to go to settings menu ?");
 
         alertDialog.setPositiveButton("Settings",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        Intent intent = new Intent(
-                                Settings.ACTION_LOCATION_SOURCE_SETTINGS);
-                        _activity.startActivity(intent);
-                    }
+                (dialog, which) -> {
+                    Intent intent = new Intent(
+                            Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                    _activity.startActivity(intent);
                 });
 
         alertDialog.setNegativeButton("Cancel",
-                new DialogInterface.OnClickListener() {
-                    public void onClick(DialogInterface dialog, int which) {
-                        dialog.cancel();
-                    }
-                });
+                (dialog, which) -> dialog.cancel());
 
         alertDialog.show();
     }
@@ -187,8 +169,8 @@ public final class GPS implements LocationListener, ActivityCompat.OnRequestPerm
         }
     }
 
-    public static interface LocationPermissionResponseListener {
-        public void onResponse(Boolean permissionGranted);
+    public interface LocationPermissionResponseListener {
+        void onResponse(Boolean permissionGranted);
     }
 
 }

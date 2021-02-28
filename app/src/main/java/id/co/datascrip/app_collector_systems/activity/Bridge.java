@@ -16,7 +16,7 @@ import id.co.datascrip.app_collector_systems.helper.BaseActivity;
 
 public class Bridge extends BaseActivity {
     public static final int INTENT_SCANNING = 1000;
-    MaterialEditText tx_no,tx_scan_title;
+    MaterialEditText tx_no, tx_scan_title;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,10 +28,10 @@ public class Bridge extends BaseActivity {
             intent.putExtra("bundle", bundle);
             startActivityForResult(intent, INTENT_SCANNING);
             //finish();
-        }else{
-            final MaterialEditText tx_no = (MaterialEditText) findViewById(R.id.tx_no);
-            MaterialEditText tx_scan_title = (MaterialEditText) findViewById(R.id.tx_scan_title);
-            Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
+        } else {
+            final MaterialEditText tx_no = findViewById(R.id.tx_no);
+            MaterialEditText tx_scan_title = findViewById(R.id.tx_scan_title);
+            Toolbar toolbar = findViewById(R.id.toolbar);
             String title = bundle.getString("TitleScan");
             toolbar.setTitle(title);
             setSupportActionBar(toolbar);
@@ -76,7 +76,7 @@ public class Bridge extends BaseActivity {
             intent.putExtra(getString(R.string.intent_result_scan), data.getStringExtra(getString(R.string.intent_result_scan)));
             setResult(RESULT_OK, intent);
             finish();
-        }else{
+        } else {
             finish();
         }
     }

@@ -4,9 +4,9 @@ package id.co.datascrip.app_collector_systems.data;
  * Created by alamsyah_putra on 4/6/2017.
  */
 public class DataBerhasil {
-    private String id, fakturno,cust_no,cust_name,hasildesc,hasilkunjung,jampickup,jammulai,jamselesai;
+    private String id, fakturno, cust_no, cust_name, hasildesc, hasilkunjung, jampickup, jammulai, jamselesai;
 
-    public DataBerhasil(){
+    public DataBerhasil() {
 
     }
 
@@ -26,14 +26,23 @@ public class DataBerhasil {
     public String getId() {
         return id;
     }
+
     public void setId(String id) {
         this.id = id;
     }
 
-    public String getFakturno(){return fakturno;}
-    public void setFakturno(String faktur){this.fakturno = faktur;}
+    public String getFakturno() {
+        return fakturno;
+    }
 
-    public String getCust_no(){return cust_no;}
+    public void setFakturno(String faktur) {
+        this.fakturno = faktur;
+    }
+
+    public String getCust_no() {
+        return cust_no;
+    }
+
     public void setCust_no(String cust_no) {
         this.cust_no = cust_no;
     }
@@ -41,6 +50,7 @@ public class DataBerhasil {
     public String getCust_name() {
         return cust_name;
     }
+
     public void setCust_name(String cust_name) {
         this.cust_name = cust_name;
     }
@@ -48,6 +58,7 @@ public class DataBerhasil {
     public String getHasildesc() {
         return hasildesc;
     }
+
     public void setHasildesc(String hasildesc) {
         this.hasildesc = hasildesc;
     }
@@ -55,6 +66,7 @@ public class DataBerhasil {
     public String getHasilkunjung() {
         return hasilkunjung;
     }
+
     public void setHasilkunjung(String hasilkunjung) {
         this.hasilkunjung = hasilkunjung;
     }
@@ -62,6 +74,7 @@ public class DataBerhasil {
     public String getJammulai() {
         return jammulai;
     }
+
     public void setJammulai(String jammulai) {
         this.jammulai = jammulai;
     }
@@ -69,6 +82,7 @@ public class DataBerhasil {
     public String getJampickup() {
         return jampickup;
     }
+
     public void setJampickup(String jampickup) {
         this.jampickup = jampickup;
     }
@@ -76,6 +90,7 @@ public class DataBerhasil {
     public String getJamselesai() {
         return jamselesai;
     }
+
     public void setJamselesai(String jamselesai) {
         this.jamselesai = jamselesai;
     }
